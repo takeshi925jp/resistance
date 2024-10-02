@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Regist page</title>
+    <style>
+.alert-danger{color:red;}
+</style>
+</head>
+<body>
+<h2>新規ユーザー登録画面</h2>
+<form th:action="@{/regist}" th:object="${registForm}" method="post">
+    <div style="width:160px;"><label for="loginid">ログインID：</label></div>
+    <input type="text" name="loginId" autofocus="autofocus" />
+    <br/>
+    <div style="width:160px;"><label for="username">ユーザ名：</label></div>
+    <input type="text" name="userName" autofocus="autofocus" />
+    <br/>
+    <div style="width:160px;"><label for="password">パスワード：</label></div>
+    <input type="password" name="password" />
+    <br/>
+    <div style="width:160px;"><label for="password">確認用パスワード：</label></div>
+    <input type="password" name="rePassword" />
+    <br/>
+    <p><input type="submit" value="登録" /></p>
+
+	<ul th:if="${#fields.hasErrors('*')}">
+	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+	</ul>
+</form>
+</body>
+</html>

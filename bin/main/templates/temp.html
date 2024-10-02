@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+  <form method="post" th:action="@{/test}" id="note_form">
+    <input type="text" id="note">
+    <button type="submit">送信</button>
+  </form>
+</body>
+<script>
+$(function() {
+  $("#note_form").on("submit", function(e) {
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr("action"),
+      type: "POST",
+      data: {
+        note: $("#note").val()
+      },
+      dataType: "json"  // レスポンスデータをjson形式と指定する
+    })
+    .done(function(data) {
+      $(".notes").append(`<div>${data.note}</div>`);  // JSON形式のレスポンスからnoteを取得
+      $("#note").val("");
+    })
+    .fail(function() {
+      alert("error!");
+    })
+  });
+});
+</script>
+</html>

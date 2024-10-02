@@ -1,0 +1,284 @@
+@import  url(https://fonts.googleapis.com/css?family=Montserrat);
+
+@media screen and (max-width:480px) {
+ /*　画面サイズが480px以下の場合ここの記述が適用される　*/
+ .cp_iptxt {
+	position: relative;
+	max-width: 90%;
+	width: 80%;
+	margin: 40px 3%;
+
+}
+
+}
+
+
+.header{
+	color:red;
+	text-align:center;
+}
+
+ul {
+	list-style: none;
+}
+
+/***** タイトル *****/
+.title {
+  margin-left: 40%;
+  margin-right: 40%;
+  text-align:center;
+  position: relative;
+  padding: 0.25em 1em;
+  border-top: solid 2px black;
+  border-bottom: solid 2px black;
+}
+
+.title:before, .title:after {
+  content: '';
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: -webkit-calc(100% + 14px);
+  height: calc(100% + 14px);
+  background-color: black;
+}
+
+.title:before {
+  left: 7px;
+}
+
+.title:after {
+  right: 7px;
+}
+
+.box29 {
+    position: relative;
+    margin: 0% 70% 0% 0%;
+    padding:1.5% 0% 0% 0%;
+    border: solid 2px #FFA107;
+}
+
+.room-description {
+  position: relative;/*相対位置*/
+  padding-left: 1.2em;/*アイコン分のスペース*/
+  line-height: 0.3;/*行高*/
+  color: #7b6459;/*文字色*/
+}
+.room-description:before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f1b0";/*アイコンのユニコード*/
+  font-weight: 900;
+  position: absolute;/*絶対位置*/
+  font-size: 1em;/*サイズ*/
+  left: 0;/*アイコンの位置*/
+  top: 0;/*アイコンの位置*/
+  color: #ff938b; /*アイコン色*/
+}
+
+/***** 部屋作成のテキストボックス *****/
+.cp_iptxt {
+	position: relative;
+	max-width: 90%;
+	width: 50%;
+	margin: 40px 3%;
+}
+.cp_iptxt input[type='text'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.3em;
+	transition: 0.3s;
+	letter-spacing: 1px;
+	color: #aaaaaa;
+	border: none;
+	border-bottom: 2px solid #1b2538;
+	background: transparent;
+}
+.ef input[type='text']:focus {
+	border-bottom: 2px solid #da3c41;
+	outline: none;
+}
+
+.cp_iptxt input[type='password'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.3em;
+	transition: 0.3s;
+	letter-spacing: 1px;
+	color: #aaaaaa;
+	border: none;
+	border-bottom: 2px solid #1b2538;
+	background: transparent;
+}
+.ef input[type='password']:focus {
+	border-bottom: 2px solid #da3c41;
+	outline: none;
+}
+
+
+ .key-icon {
+  font-family: "Font Awesome 5 Free";
+  content: "\f23e";
+  }
+
+
+  .log {
+    z-index: 1;
+    display:block;
+  }
+
+  .log-another {
+    z-index: 1;
+    text-align:right;
+    display:block;
+  }
+
+  .log-talker {
+    margin:0px 0px 0px 2px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 0 0.2em rgba(0,0,0,1);
+}
+  .log-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 0 0.2em rgba(0,0,0,1);
+  }
+
+.fa-bullhorn {
+	 margin:0px 3px 0px 0px;
+	 float:left;
+}
+
+.miss-message {
+	padding: 1em 0em;
+	margin: 0px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff0080;
+}
+
+.chat-textbox {
+	position: relative;
+	width: 80%;
+	margin: 40px 0px;
+	background: #dbf0f0;
+}
+.chat-textbox input[type='text'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.3em;
+	transition: 0.3s;
+	letter-spacing: 1px;
+	color: #aaaaaa;
+	border: 5px groove #2f97c0;
+	border-radius: 2px;
+}
+
+.ef2 input[type='text']:focus {
+	border: 5px solid #da3c41;
+	outline: none;
+}
+
+.room-name {
+    padding: 1px 10px 1px 1px;
+    margin:0em 0em 0.5em 0em;
+    max-width: 50%;
+    display: inline-block;
+    border-left: 6px double #000;
+    background: #f4f4f4;
+    font-size: 22px;
+    font-weight: bold;
+    z-index: 1;
+  }
+.room-name::after {
+	content: "\A" ;
+	white-space: pre ;
+}
+
+.room-name i{
+    padding:0px 3px;
+}
+
+.member {
+  border: 2px solid #000000;
+  background: rgb(255, 255, 255,0.7);
+  border-radius: 4px;
+  margin: 2em 0;
+  padding: 1em;
+  position: relative;
+  max-width: 50%;
+  display: inline-block;
+  color:#000000;
+}
+.member::before {
+  background-color: #fff;
+  content: "参加者";
+  font-weight: bold;
+  left: 1em;
+  padding: 0 .5em;
+  position: absolute;
+  top: -1em;
+  color: #a89f9f;
+}
+
+  .member-text {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    color: #000000;
+}
+
+.spin-deco {
+  margin:1% 40% 1% 42%;
+  text-align:center;
+  display:inline-block;
+  color: #444;
+  font-size: 24px;
+  font-weight: bold;
+  position: relative;
+  padding: 0 0 2px 32px;
+  border-bottom: 1px solid #888; }
+.spin-deco:before, .spin-deco:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #d14;
+    margin: auto; }
+.spin-deco:before {
+    top: -6px;
+    left: 0px;
+    animation: spin 4s linear infinite; }
+.spin-deco:after {
+    top: 6px;
+    left: 6px;
+    animation: spin 4s linear infinite; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+.header-deco {
+	background-color: rgba(238, 184, 177, 0.3);
+	border-bottom: double 3px rgba(11, 12, 12, 0.4);
+	border-top: double 3px rgba(11, 12, 12, 0.4);
+	text-align: center;
+	padding: 2px 1px;
+}
+
+.footer-deco {
+	background-color: rgba(165, 188, 194, 0.418);
+	border-bottom: solid 0.5px rgba(11, 12, 12, 0.1);
+	border-top: solid 0.5px rgba(11, 12, 12, 0.1);
+	text-align: right;
+	font-size: small;
+}
+

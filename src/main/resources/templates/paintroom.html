@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/button.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/box.css?v=2">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+<link rel="stylesheet" type="text/css" href="/css/paint.css?v=2">
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="js/app.js"></script>
+
+<title>Paint Room</title>
+
+</head>
+
+<body>
+	<div id="app">
+		<header-component>Paint Room</header-component>
+		<div class="content-body-paint">
+
+			<!--------- 退室ボタン --------->
+			<div>
+				<input type="button" value="退室" onclick="exit();"
+					class="btn-gradient-3d-orange" />
+			</div>
+
+			<input id="roomId" type="hidden" th:value="${room.id}">
+
+			<!--------- ルーム名 --------->
+			<div class=room-name>
+				<i class="fas fa-dungeon"></i><span th:text="${room.name}"></span>
+			</div>
+			<br>
+			<!--------- 自分の名前 --------->
+			<div class=room-name>
+				<i class="far fa-frown-open"></i><span th:text="${memberName}"></span>
+			</div>
+			<br>
+			<!--------- 参加者 --------->
+			<div class="member">
+				<th:block th:each="member : ${members}">
+					<span class="show_players"> <span class="member-text">
+							[<span th:text="${member.name}"></span>]
+					</span>
+					</span>
+				</th:block>
+			</div>
+
+			<!--------- 描画エリア --------->
+			<div>
+				<canvas id="myCanvas" width="500px" height="500px"></canvas>
+			</div>
+
+            <div class="font-default">
+			描画色の変更<input id="paint-color" type="color" value="#000000" style="margin-left: 4px;">
+            </div>
+
+			<p>
+				<label class="font-default">作品名<input id="galleryname" class="kakomi-te1" type="text"
+					name="galleryname" size="40" maxlength="20"></label>
+			</p>
+
+			<div>
+				<button type="button" id="btn-send" class="btn btn--yellow btn--cubic font-default">ギャラリーに登録</button>
+			</div>
+		</div>
+	</div>
+	<footer-component>Copyright © 2021 takeshi Inc. All Rights Reserved.</footer-component>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="js/component.js"></script>
+	<script src="js/common.js"></script>
+
+	<!--------- javascript --------->
+	<script>
+    	const SAVE_URL = "/paint_save";
+        const canvas = document.getElementById("myCanvas");
+        const context = canvas.getContext("2d");
+
+        context.rect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "#f0f8ff";
+        context.fill();
+
+        context.lineWidth = 5;
+        context.strokeStyle = "#000000";
+
+        let mouse = { x: 0, y: 0 };
+
+        // 座標取得（PC）
+        canvas.addEventListener("mousemove", function (e) {
+            mouse.x = e.pageX - this.offsetLeft;
+            mouse.y = e.pageY - this.offsetTop;
+        }, false);
+        // 座標取得（スマホ）
+        canvas.addEventListener("touchmove", function (e) {
+        	var touchObject = event.changedTouches[0] ;
+            mouse.x = touchObject.pageX - this.offsetLeft;
+            mouse.y = touchObject.pageY - this.offsetTop;
+        }, false);
+
+        // 描画処理（PC）
+        canvas.addEventListener("mousedown", function (e) {
+            context.beginPath();
+            context.moveTo(mouse.x, mouse.y);
+            canvas.addEventListener("mousemove", onPaint, false);
+        }, false);
+        // 描画処理（スマホ）
+        canvas.addEventListener("touchstart", function (e) {
+        	// 開始座標を取得
+        	var touchObject = event.changedTouches[0] ;
+            mouse.x = touchObject.pageX - this.offsetLeft;
+            mouse.y = touchObject.pageY - this.offsetTop;
+
+            context.beginPath();
+            context.moveTo(mouse.x, mouse.y);
+            canvas.addEventListener("touchmove", onPaint, false);
+        }, false);
+
+        // 描画中止処理（スマホ）
+        canvas.addEventListener("touchend", function (e) {
+        	canvas.removeEventListener("touchmove", onPaint, false);
+    	    var roomId = document.getElementById("roomId").value;
+            // ★ここでリアルタイム反映
+            sendPaint(canvas.toDataURL("image/png"), roomId);
+        }, false);
+        // 描画中止処理（PC）
+        canvas.addEventListener("mouseup", function () {
+            canvas.removeEventListener("mousemove", onPaint, false);
+
+    	    var roomId = document.getElementById("roomId").value;
+            // ★ここでリアルタイム反映
+            sendPaint(canvas.toDataURL("image/png"), roomId);
+        })
+
+        const onPaint = function () {
+            context.lineTo(mouse.x, mouse.y);
+            context.stroke();
+        }
+
+        // 保存を行うプログラムがあるURL
+        //const SAVE_URL = 'paint_saveコントローラーurl';
+
+        // 保存関数
+        document.querySelector("#btn-send").addEventListener("click", ()=> {
+
+        	var galleryName = document.getElementById("galleryname").value;
+        	if (!galleryName) {
+        		alert("作品名を入力してください");
+        		return
+        	}
+
+        	//console.log("galleryname:"+galleryName);
+            const canvasData = canvas.toDataURL("image/png");  // DataURI Schemaが返却される
+
+            // 送信情報の設定
+            const param = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                body: JSON.stringify({ data: canvasData, galleryName: galleryName})
+            };
+
+            // サーバへ送信
+            sendServer(SAVE_URL, param);
+        });
+
+        /**
+         * サーバへJSON送信
+         *
+         * @param url   {string} 送信先URL
+         * @param param {object} fetchオプション
+         */
+        function sendServer(url, param) {
+
+        	 //console.log("url:" + url);
+        	 //console.log("param:" + param);
+
+            fetch(url, param)
+                .then((response) => {
+                	//console.log("status:" + response.status);
+                    return response;
+                })
+                .then((response) => {
+                	//console.log("json:"+json);
+                    if (response.status) {
+                        alert("ギャラリーに登録しました。");
+                        //setImage(response.result); // レスポンスのボディ部
+                    }
+                    else {
+                        //console.log("送信に『失敗』しました");
+                        //console.log(`[error1] ${response.result}`);
+                    }
+                })
+                .catch((error) => {
+                    //console.log("送信に『失敗』しました");
+                    //console.log(`[error2] ${error}`);
+                });
+        }
+
+		function exit() {
+			location.href="/paint_top";
+		}
+
+		$(function(){
+			$("#paint-color").on("change", function() {
+				// 描画色を変更したものにする
+				context.strokeStyle = document.getElementById("paint-color").value;
+			});
+
+		});
+
+    </script>
+
+
+
+</body>
+
+</html>
