@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.resistance.mapper.RoomMapper">
+
+<!--
+    <select id="showRooms" resultType="com.example.resistance.entity.Room">
+		select * from room
+    </select>
+-->
+
+    <select id="showRooms" resultType="com.example.resistance.entity.Room">
+		select id, size, current_member_num, name,  description, user_session, create_date, password, room_kind from room where room_kind = 0;
+    </select>
+
+    <select id="showPaintRooms" resultType="com.example.resistance.entity.Room">
+		select id, size, current_member_num, name,  description, user_session, create_date, password, room_kind from room where room_kind = 1;
+    </select>
+
+    <select id="showMember" resultType="com.example.resistance.entity.Member">
+		select * from resistance.member where room_id = #{id};
+    </select>
+
+   <select id="showRoom" resultType="com.example.resistance.entity.Room">
+		select * from room where id = #{id};
+    </select>
+
+    <insert id="createRoom" >
+		insert into room
+			(size,current_member_num ,name, description, password, user_session, room_kind)
+			values (#{size}, #{currentMemberNum}, #{name}, #{description}, #{password}, #{userSession}, #{roomKind})
+    </insert>
+
+    <insert id="createMember"   useGeneratedKeys="true" keyProperty="id">
+		insert into resistance.member (room_id, name) values (#{roomId}, #{name})
+    </insert>
+
+    <update id="updateMemberNum" >
+		update room set current_member_num= (select count(*) from resistance.member where room_id = #{id}) where id = #{id};
+    </update>
+
+    <delete id="deleteRoom" >
+		delete from room where id = #{id};
+    </delete>
+
+    <delete id="exitRoom" >
+		delete from resistance.member where id = #{id};
+    </delete>
+
+</mapper>

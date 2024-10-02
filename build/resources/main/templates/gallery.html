@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8" />
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/top.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/gallery.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/button.css?v=2">
+<link rel="stylesheet" type="text/css" href="/css/box.css?v=2">
+<title>Gallery</title>
+
+</head>
+<body>
+
+	<!-- 背景用のcanvas -->
+	<canvas id="canvas"></canvas>
+
+	<!-- タイトル -->
+	<div id="app">
+		<hedder-title>Gallery</hedder-title>
+	</div>
+
+	<!-- TOPに戻る -->
+	<div class="row">
+		<form th:action="@{/top}" method="get">
+			<input type="submit" value="TOPに戻る" class="btn-gradient-3d-orange"
+				style="position: relative; z-index: 1; margin-left: 30%">
+		</form>
+	</div>
+
+	<!-- ギャラリー -->
+		<th:block th:each="gallery : ${gallerys}">
+			<div class="gallery_block">
+				<div class="creator">
+					[作成者：<span th:text="${gallery.creator}"></span>]
+				</div>
+
+				<div class="gallery_name">
+					[作品名:<span th:text="${gallery.gallery_name}"></span>]
+				</div>
+
+				<div class="gallery_img">
+					<img th:src="@{${gallery.picture_data}}" height="300" width="400">
+					<!-- <img th:src="@{${gallery.gallery_path}}" height="300" width="400">  -->
+				</div>
+			</div>
+		</th:block>
+
+	<!-- javascript -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script type="text/javascript" src="js/component.js"></script>
+	<script type="text/javascript" src="js/gallery.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "com.example.resistance.properties.AppProperties",
+      "sourceType": "com.example.resistance.properties.AppProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.gallery-path",
+      "type": "java.lang.String",
+      "sourceType": "com.example.resistance.properties.AppProperties"
+    },
+    {
+      "name": "app.gallery-path-local",
+      "type": "java.lang.String",
+      "sourceType": "com.example.resistance.properties.AppProperties"
+    },
+    {
+      "name": "app.kind-chat-room",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.resistance.properties.AppProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "app.kind-paint-room",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.resistance.properties.AppProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "app.message-over-room-size",
+      "type": "java.lang.String",
+      "sourceType": "com.example.resistance.properties.AppProperties"
+    },
+    {
+      "name": "app.missing-password-pattern",
+      "type": "java.lang.String",
+      "sourceType": "com.example.resistance.properties.AppProperties"
+    },
+    {
+      "name": "app.number-format-error",
+      "type": "java.lang.String",
+      "sourceType": "com.example.resistance.properties.AppProperties"
+    },
+    {
+      "name": "app.paint-extension",
+      "type": "java.lang.String",
+      "sourceType": "com.example.resistance.properties.AppProperties"
+    },
+    {
+      "name": "app.pass-missing-message",
+      "type": "java.lang.String",
+      "sourceType": "com.example.resistance.properties.AppProperties"
+    },
+    {
+      "name": "app.password-pattern",
+      "type": "java.lang.String",
+      "sourceType": "com.example.resistance.properties.AppProperties"
+    }
+  ],
+  "hints": []
+}
