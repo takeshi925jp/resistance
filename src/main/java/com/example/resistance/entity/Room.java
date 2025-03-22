@@ -3,7 +3,7 @@ package com.example.resistance.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Pattern;
 
 import lombok.Data;
 import lombok.Getter;

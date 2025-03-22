@@ -1,6 +1,6 @@
 package com.example.resistance.controller;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;

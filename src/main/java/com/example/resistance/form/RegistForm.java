@@ -1,6 +1,6 @@
 package com.example.resistance.form;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
